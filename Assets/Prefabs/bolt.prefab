@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d015cad5329084a90516c682e4a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dame: 5
+  dame: 20
   bulletSpeed: 8
 --- !u!114 &-5058269970561585778
 MonoBehaviour:
@@ -170,6 +170,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09, y: -0.0035432428}
+  m_Offset: {x: -0.09, y: 0.0013521165}
   serializedVersion: 2
-  m_Radius: 0.101812705
+  m_Radius: 0.07034255

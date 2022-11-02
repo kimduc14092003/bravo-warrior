@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class attackDame : MonoBehaviour
 {
-    public float weaponDamege;
+    public float weaponDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +21,8 @@ public class attackDame : MonoBehaviour
     {
         if(collision.gameObject.tag=="Enemy")
         {
-            pigEnemyLogic attackEnemy = collision.gameObject.GetComponent<pigEnemyLogic>();
-            attackEnemy.addDamage(weaponDamege);
+            enemyHealthLogic attackEnemy = collision.gameObject.GetComponent<enemyHealthLogic>();
+            attackEnemy.addDamage(weaponDamage);
         }
     }
 

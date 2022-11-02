@@ -13,8 +13,8 @@ public class enemyMovement : MonoBehaviour
     private bool isFreeMovement;
     private bool isAttackMovement;
     private bool isMovingToFreeZone;
-    private bool isHit_pigEnemy;
-    private pigEnemyLogic pigEnemyLogic;
+    private bool isHit_enemy;
+    private enemyHealthLogic enemyHealthLogic;
     private bool isStop;
 
     const string PIG_ENEMY_IDLE = "Pig_Enemy_Idle";
@@ -25,7 +25,7 @@ public class enemyMovement : MonoBehaviour
     public float nextMovement = 8f;
     public float enemySpeedWalk = 3f;
     public float enemySpeedRun = 5f;
-    public GameObject sensorDefaulPos;
+   //public GameObject sensorDefaulPos;
     public GameObject Player;
     public GameObject pigEnemy;
 
@@ -39,7 +39,7 @@ public class enemyMovement : MonoBehaviour
         isMovingToFreeZone = false;
         isAttackMovement = false;
         isStop=false;
-        pigEnemyLogic = pigEnemy.GetComponent<pigEnemyLogic>();
+        enemyHealthLogic = pigEnemy.GetComponent<enemyHealthLogic>();
     }
     // Start is called before the first frame update
     void Start()
@@ -55,10 +55,10 @@ public class enemyMovement : MonoBehaviour
         attackMovement(isAttackMovement);
         hanldeAnimation();
         isHitted();
-        isHit_pigEnemy = pigEnemyLogic.isHit;
+        isHit_enemy = enemyHealthLogic.isHit;
     }
 
-    private void freeMovement(bool isFree)
+    /*private void freeMovement(bool isFree)
     {
         float newAxisX = rb2d.transform.localPosition.x;
 
@@ -85,11 +85,11 @@ public class enemyMovement : MonoBehaviour
             }
 
         }
-    }
+    }*/
 
     private void isHitted()
     {
-        if (isHit_pigEnemy)
+        if (isHit_enemy)
         {
             if (Player.transform.position.x <= transform.position.x)
             {
@@ -128,7 +128,7 @@ public class enemyMovement : MonoBehaviour
 
     void hanldeAnimation()
     {
-        if (isHit_pigEnemy)
+        if (isHit_enemy)
         {
             ChangeAnimationState(PIG_ENEMY_HIT);
         }
@@ -156,7 +156,7 @@ public class enemyMovement : MonoBehaviour
     }
 
 
-    private void moveToFreeZone(bool isMoving)
+    /*private void moveToFreeZone(bool isMoving)
     {
         stopVelocity();
         if (isMoving)
@@ -182,7 +182,7 @@ public class enemyMovement : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     private void OnTriggerStay2D(Collider2D collision)
     {

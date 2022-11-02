@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class pigEnemyLogic : MonoBehaviour
+public class enemyHealthLogic : MonoBehaviour
 {
     public bool isHit;
     public float maxHealth;
-    float currentHealth;
+    public float currentHealth;
 
     enemyMovement enemyMovement;
 
-    const string PIG_ENEMY_HIT = "Pig_Enemy_Hit";
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,9 +24,9 @@ public class pigEnemyLogic : MonoBehaviour
         currentHealth -= dame;
         if (currentHealth <= 0)
         {
-        Invoke("makeDead", 0.5f);
+            Invoke("makeDead", 0.5f);
         }
-        Invoke("hitComplete", 0.4f);
+            Invoke("hitComplete", 0.5f);
     }
     
     void hitComplete()

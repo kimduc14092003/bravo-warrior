@@ -30,7 +30,7 @@ public class boltPower : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            pigEnemyLogic attackEnemy = collision.gameObject.GetComponent<pigEnemyLogic>();
+            enemyHealthLogic attackEnemy = collision.gameObject.GetComponent<enemyHealthLogic>();
             attackEnemy.addDamage(dame);
             Destroy(gameObject);
         }
