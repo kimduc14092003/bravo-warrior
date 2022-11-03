@@ -77,11 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32e2655e8a05b7449395eae677ca315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0
-  bullet: {fileID: 4890208972242390605, guid: bf4d7146a644fce44806f6f4de205d44, type: 3}
+  fireRate: 2
+  bullet: {fileID: 4010459613168252629, guid: a18c6bfd529b3cd4584755b7b5e036ee, type: 3}
   pos_fire: {fileID: 7154089272925549685}
   bossGameObject: {fileID: 7154089273996176786}
-  Player: {fileID: 0}
+  Player: {fileID: 3461127186522222357, guid: 1ac1ed6abfc7004429661d20421835d3, type: 3}
   SliderBossHealth: {fileID: 0}
 --- !u!1 &7154089273996176786
 GameObject:

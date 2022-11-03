@@ -166,7 +166,6 @@ public class playerController : MonoBehaviour
         {
             isDash = true;
             Invoke("DashComplete", 0.2f);
-            Debug.Log("Dash");
             currentDashCountdown = countdownDash;
         }
         //Add Force when player dashing

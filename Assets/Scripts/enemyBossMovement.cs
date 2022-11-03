@@ -16,6 +16,7 @@ public class enemyBossMovement : MonoBehaviour
     private float maxHealth;
     private float currentHealth;
     private enemyHealthLogic bossEnemyLogic;
+    private startBattleBoss startBattleBoss;
     private Animator animator;
 
     const string GHOST_BOSS_IDLE = "Ghost_Boss_Idle";
@@ -31,10 +32,13 @@ public class enemyBossMovement : MonoBehaviour
     public GameObject pos_fire;
     public GameObject bossGameObject;
     public GameObject Player;
+    public GameObject sensor_battleBoss;
     public Slider SliderBossHealth;
+    
     private void Awake()
     {
         bossEnemyLogic = bossGameObject.GetComponent<enemyHealthLogic>();
+        startBattleBoss=sensor_battleBoss.GetComponent<startBattleBoss>();
         isIdle = true;
         isRun = false;
         isAttack = false;
@@ -51,6 +55,7 @@ public class enemyBossMovement : MonoBehaviour
         isHit = bossEnemyLogic.isHit;
         currentHealth = bossEnemyLogic.currentHealth;
         SliderBossHealth.value = Mathf.InverseLerp(0, maxHealth, currentHealth);
+        isAttack = startBattleBoss.isOnSize;
     }
 
     void attackMovement()
@@ -63,11 +68,11 @@ public class enemyBossMovement : MonoBehaviour
 
                 if (isFacingRight)
                 {
-                    Instantiate(bullet, pos_fire.transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
+                    Instantiate(bullet, pos_fire.transform.position, Quaternion.Euler(new Vector3(0, 0, 180))).SetActive(true);
                 }
                 else
                 {
-                    Instantiate(bullet, pos_fire.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                    Instantiate(bullet, pos_fire.transform.position, Quaternion.Euler(new Vector3(0, 0, 0))).SetActive(true);
                 }
 
                 isDelay = true;
@@ -89,6 +94,13 @@ public class enemyBossMovement : MonoBehaviour
             }
         }
     }
+    void delayToMatchAnimator()
+    {
+        if (isDelay)
+        {
+            isDelay = false;
+        }
+    }
 
     void hanldeAnimation()
     {
@@ -107,29 +119,6 @@ public class enemyBossMovement : MonoBehaviour
         else if (isAttack)
         {
             ChangeAnimationState(GHOST_BOSS_ATTACK);
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            isIdle = false;
-            isAttack = true;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            isIdle = true;
-            isAttack = false;
         }
     }
 
