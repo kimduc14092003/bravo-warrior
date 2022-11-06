@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class playerHealth : MonoBehaviour
@@ -70,11 +71,12 @@ public class playerHealth : MonoBehaviour
     private void makeDeath()
     {
         isDead = true;
-        Invoke("freezeScene", 1.02f);
+        Invoke("GameOver", 1.02f);
     }
 
-    private void freezeScene()
+    private void GameOver()
     {
         Time.timeScale = 0;
+        SceneManager.LoadScene(3,LoadSceneMode.Additive);
     }
 }

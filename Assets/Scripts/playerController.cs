@@ -6,12 +6,14 @@ using UnityEngine;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     private Animator animator;
     private playerHealth playerHealth;
+    private CircleCollider2D circleCollider;
     private bool isJumpPressed;
     private bool isAttackPressed;
     private bool isGrounded;
@@ -58,6 +60,7 @@ public class playerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        circleCollider = GetComponent<CircleCollider2D>();
         facingDirection = 1;
         playerHealth=gameObject.GetComponent<playerHealth>();
     }
@@ -110,6 +113,11 @@ public class playerController : MonoBehaviour
 
     private void PlayerAction()
     {
+        if (Input.GetKey(KeyCode.P))
+        {
+            Time.timeScale = 0;
+            SceneManager.LoadSceneAsync(2,LoadSceneMode.Additive);
+        }
         if (isHit)
         {
             //Stop velocity when pressed player was hitted
@@ -120,7 +128,7 @@ public class playerController : MonoBehaviour
         {
             if (isGrounded)
             {
-                rb2d.velocity = new Vector2(0, 0); //Stop velocity when pressed button attack
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y); //Stop velocity when pressed button attack
             }
             isAttackPressed = true;
             attackSize.SetActive(true);
@@ -224,10 +232,12 @@ public class playerController : MonoBehaviour
             }
             else if (AirSpeedY > 0.01)
             {
+                circleCollider.enabled = false;
                 ChangeAnimationState(PLAYER_JUMP);
             }
             else if (AirSpeedY < -0.01)
             {
+                circleCollider.enabled = true;
                 ChangeAnimationState(PLAYER_FALL);
             }
         }

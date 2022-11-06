@@ -10,8 +10,12 @@ public class enemyBossMovement : MonoBehaviour
     private bool isHit;
     private bool isAttack;
     private bool isDelay;
+    private bool isSkilled;
+    private bool isSkill;
+    private bool isSkilling;
     private string currentAnimaton;
     private float nextFire = 0;
+    private float nextSummonSkill;
     private bool isFacingRight;
     private float maxHealth;
     private float currentHealth;
@@ -27,12 +31,16 @@ public class enemyBossMovement : MonoBehaviour
     const string GHOST_BOSS_ATTACK = "Ghost_Boss_Attack";
     const string GHOST_BOSS_DYING = "Ghost_Boss_Dying";
 
+    public float CDSummonSkill;
     public float fireRate;
     public GameObject bullet;
     public GameObject pos_fire;
     public GameObject bossGameObject;
     public GameObject Player;
     public GameObject sensor_battleBoss;
+    public GameObject enemyTrunk;
+    public GameObject sensorPosSpawn1;
+    public GameObject sensorPosSpawn2;
     public Slider SliderBossHealth;
     
     private void Awake()
@@ -44,18 +52,21 @@ public class enemyBossMovement : MonoBehaviour
         isAttack = false;
         isDelay = false;
         isFacingRight = false;
+        isSkill = false;
+        isSkilling = false;
+        isSkilled = false;
         animator = GetComponentInChildren<Animator>();
         maxHealth=bossEnemyLogic.maxHealth;
     }
 
     private void FixedUpdate()
     {
-        hanldeAnimation();
-        attackMovement();
         isHit = bossEnemyLogic.isHit;
         currentHealth = bossEnemyLogic.currentHealth;
         SliderBossHealth.value = Mathf.InverseLerp(0, maxHealth, currentHealth);
         isAttack = startBattleBoss.isOnSize;
+        hanldeAnimation();
+        attackMovement();
     }
 
     void attackMovement()
@@ -93,6 +104,31 @@ public class enemyBossMovement : MonoBehaviour
 
             }
         }
+
+        if (currentHealth <= maxHealth *0.8f && !isSkilled)
+        {
+            isSkilling = true;
+            Invoke("EndSkilling", 2f);
+            isSkilled = true;
+
+        }
+    }
+
+    private void EndSkilling()
+    {
+        isSkill = true;
+        SummonSkill();
+        isSkilling=false;
+    }
+
+    private void SummonSkill()
+    {
+        if (isSkill)
+        {
+            isSkill=false;
+            Instantiate(enemyTrunk, sensorPosSpawn1.transform.position, Quaternion.Euler(0, 0, 0)).SetActive(true);
+            Instantiate(enemyTrunk, sensorPosSpawn2.transform.position, Quaternion.Euler(0, 0, 0)).SetActive(true);
+        }
     }
     void delayToMatchAnimator()
     {
@@ -104,7 +140,11 @@ public class enemyBossMovement : MonoBehaviour
 
     void hanldeAnimation()
     {
-        if (isHit)
+        if (isSkilling)
+        {
+            ChangeAnimationState(GHOST_BOSS_CASTING_SPELL);
+        }
+        else if (isHit)
         {
             ChangeAnimationState(GHOST_BOSS_HURT);
         }
@@ -112,7 +152,7 @@ public class enemyBossMovement : MonoBehaviour
         {
             ChangeAnimationState(GHOST_BOSS_MOVING);
         }
-        else if (isIdle || isDelay)
+        else if (isDelay)
         {
             ChangeAnimationState(GHOST_BOSS_IDLE);
         }
